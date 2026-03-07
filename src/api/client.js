@@ -22,7 +22,8 @@ const api = axios.create({
 console.log("API Client initialized with base URL:", api.defaults.baseURL);
 /**
  * Response Interceptor
- * Handles 401 errors globally by clearing user data and redirecting to login
+ * Handles 401 errors globally by clearing user data
+ * Note: Does not redirect - let React Router handle navigation
  */
 api.interceptors.response.use(
   (res) => res,
@@ -30,8 +31,8 @@ api.interceptors.response.use(
     if (err.response?.status === 401) {
       // Clear user data from localStorage (not the token, it's in httpOnly cookie)
       localStorage.removeItem("tf_user");
-      // Redirect to login page
-      window.location.href = "/login";
+      // Dispatch custom event to notify AuthContext of logout
+      window.dispatchEvent(new CustomEvent("auth:logout"));
     }
     return Promise.reject(err);
   },

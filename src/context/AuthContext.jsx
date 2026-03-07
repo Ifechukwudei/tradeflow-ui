@@ -45,7 +45,8 @@ export const AuthProvider = ({ children }) => {
           const response = await getMe();
           setUser(response.data.data);
         } catch (error) {
-          // Token is invalid or expired, clear localStorage
+          // Token is invalid or expired, clear localStorage and user state
+          console.log("Token invalid, clearing auth state");
           localStorage.removeItem("tf_user");
           setUser(null);
         }
@@ -54,6 +55,19 @@ export const AuthProvider = ({ children }) => {
     };
 
     checkAuth();
+  }, []);
+
+  /**
+   * Listen for logout events from API interceptor
+   */
+  useEffect(() => {
+    const handleLogout = () => {
+      console.log("Logout event received, clearing user state");
+      setUser(null);
+    };
+
+    window.addEventListener("auth:logout", handleLogout);
+    return () => window.removeEventListener("auth:logout", handleLogout);
   }, []);
 
   /**
