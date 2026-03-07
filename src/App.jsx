@@ -14,7 +14,17 @@ import Reports from './pages/Reports';
 import Users from './pages/Users';
 
 const ProtectedRoute = ({ children }) => {
-  const { user } = useAuth();
+  const { user, loading } = useAuth();
+
+  // Show loading while checking authentication
+  if (loading) {
+    return (
+      <div className="min-h-screen bg-gray-950 flex items-center justify-center">
+        <div className="text-white">Loading...</div>
+      </div>
+    );
+  }
+
   return user ? children : <Navigate to="/login" replace />;
 };
 

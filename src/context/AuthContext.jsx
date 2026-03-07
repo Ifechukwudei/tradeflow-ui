@@ -1,5 +1,6 @@
 /* eslint-disable react-refresh/only-export-components */
 import { createContext, useContext, useState, useEffect } from "react";
+import { getMe } from "../api/auth";
 
 /**
  * Authentication Context
@@ -20,6 +21,7 @@ const AuthContext = createContext(null);
  * - Persists user data in localStorage (for UI display only)
  * - Token is managed by httpOnly cookies (more secure)
  * - Automatically restores session on page reload
+ * - Verifies authentication status on app load
  */
 export const AuthProvider = ({ children }) => {
   // Initialize user state from localStorage (only user data, not token)
@@ -27,6 +29,32 @@ export const AuthProvider = ({ children }) => {
     const saved = localStorage.getItem("tf_user");
     return saved ? JSON.parse(saved) : null;
   });
+
+  const [loading, setLoading] = useState(true);
+
+  /**
+   * Check authentication status on app load
+   * Verifies if the stored token is still valid
+   */
+  useEffect(() => {
+    const checkAuth = async () => {
+      const savedUser = localStorage.getItem("tf_user");
+      if (savedUser) {
+        try {
+          // Verify token is still valid by calling /me endpoint
+          const response = await getMe();
+          setUser(response.data.data);
+        } catch (error) {
+          // Token is invalid or expired, clear localStorage
+          localStorage.removeItem("tf_user");
+          setUser(null);
+        }
+      }
+      setLoading(false);
+    };
+
+    checkAuth();
+  }, []);
 
   /**
    * Login function
@@ -60,7 +88,7 @@ export const AuthProvider = ({ children }) => {
   }, [user]);
 
   return (
-    <AuthContext.Provider value={{ user, login, logout }}>
+    <AuthContext.Provider value={{ user, login, logout, loading }}>
       {children}
     </AuthContext.Provider>
   );
@@ -69,7 +97,7 @@ export const AuthProvider = ({ children }) => {
 /**
  * useAuth Hook
  * Custom hook to access authentication context
- * @returns {Object} Authentication context with user, login, and logout
+ * @returns {Object} Authentication context with user, login, logout, and loading
  * @throws {Error} If used outside of AuthProvider
  */
 export const useAuth = () => {
