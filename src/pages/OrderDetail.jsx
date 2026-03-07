@@ -112,10 +112,10 @@ export default function OrderDetail() {
   }
 
   return (
-    <div className="p-8">
+    <div className="p-4 md:p-8">
       {/* Header */}
-      <div className="flex items-center justify-between mb-6">
-        <div className="flex items-center gap-4">
+      <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-4 mb-6">
+        <div className="flex items-center gap-3 md:gap-4">
           <button
             onClick={() => navigate('/orders')}
             className="text-gray-400 hover:text-white transition-colors"
@@ -123,20 +123,20 @@ export default function OrderDetail() {
             ← Back
           </button>
           <div>
-            <h1 className="text-2xl font-bold text-white">Order #{order.id}</h1>
+            <h1 className="text-xl md:text-2xl font-bold text-white">Order #{order.id}</h1>
             <p className="text-gray-400 text-sm mt-1">
               Created {new Date(order.created_at).toLocaleDateString()} at {new Date(order.created_at).toLocaleTimeString()}
             </p>
           </div>
         </div>
-        <span className={`text-sm px-3 py-1.5 rounded-full ${STATUS_COLORS[order.status]}`}>
+        <span className={`text-sm px-3 py-1.5 rounded-full ${STATUS_COLORS[order.status]} whitespace-nowrap`}>
           {order.status}
         </span>
       </div>
 
-      <div className="grid grid-cols-1 lg:grid-cols-3 gap-6">
+      <div className="grid grid-cols-1 lg:grid-cols-3 gap-4 md:gap-6">
         {/* Main Content */}
-        <div className="lg:col-span-2 space-y-6">
+        <div className="lg:col-span-2 space-y-4 md:space-y-6">
           {/* Items */}
           <div className="bg-gray-900 border border-gray-800 rounded-xl p-6">
             <h2 className="text-white font-semibold mb-4">Order Items</h2>
@@ -176,7 +176,7 @@ export default function OrderDetail() {
         </div>
 
         {/* Sidebar */}
-        <div className="space-y-6">
+        <div className="space-y-4 md:space-y-6">
           {/* Customer Info */}
           <div className="bg-gray-900 border border-gray-800 rounded-xl p-6">
             <h2 className="text-white font-semibold mb-4">Customer</h2>

@@ -195,18 +195,18 @@ export default function Reports() {
   }, [loadRevenue, loadOrdersSummary, loadTopProducts, loadInventoryStatus, loadPaymentsSummary]);
 
   return (
-    <div className="p-8">
+    <div className="p-4 md:p-8">
       {/* Page Header */}
       <div className="mb-6">
-        <h1 className="text-2xl font-bold text-white">Reports & Analytics</h1>
+        <h1 className="text-xl md:text-2xl font-bold text-white">Reports & Analytics</h1>
         <p className="text-gray-400 text-sm mt-1">Business insights and performance metrics</p>
       </div>
 
       {/* Revenue Section */}
-      <div className="bg-gray-900 border border-gray-800 rounded-xl p-6 mb-6">
-        <div className="flex items-center justify-between mb-4">
+      <div className="bg-gray-900 border border-gray-800 rounded-xl p-4 md:p-6 mb-6">
+        <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-4 mb-4">
           <h2 className="text-white font-semibold text-lg">Revenue Summary</h2>
-          <div className="flex gap-2">
+          <div className="flex flex-col sm:flex-row gap-2">
             {/* Date range filters */}
             <input
               type="date"
@@ -260,7 +260,7 @@ export default function Reports() {
         )}
       </div>
 
-      <div className="grid grid-cols-1 lg:grid-cols-2 gap-6 mb-6">
+      <div className="grid grid-cols-1 lg:grid-cols-2 gap-4 md:gap-6 mb-6">
         {/* Orders Summary Section with Pie Chart */}
         <div className="bg-gray-900 border border-gray-800 rounded-xl p-6">
           <h2 className="text-white font-semibold text-lg mb-4">Orders by Status</h2>
@@ -362,7 +362,7 @@ export default function Reports() {
         </div>
       </div>
 
-      <div className="grid grid-cols-1 lg:grid-cols-2 gap-6">
+      <div className="grid grid-cols-1 lg:grid-cols-2 gap-4 md:gap-6">
         {/* Top Products Section with Bar Chart */}
         <div className="bg-gray-900 border border-gray-800 rounded-xl p-6">
           <h2 className="text-white font-semibold text-lg mb-4">Top Selling Products</h2>

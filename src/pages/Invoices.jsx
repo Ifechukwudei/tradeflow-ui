@@ -58,14 +58,14 @@ export default function Invoices() {
   const outstanding = (inv) => parseFloat(inv.amount_due) - parseFloat(inv.amount_paid);
 
   return (
-    <div className="p-8">
+    <div className="p-4 md:p-8">
       <div className="mb-6">
-        <h1 className="text-2xl font-bold text-white">Invoices</h1>
+        <h1 className="text-xl md:text-2xl font-bold text-white">Invoices</h1>
         <p className="text-gray-400 text-sm mt-1">{pagination.total || 0} total invoices</p>
       </div>
 
-      <div className="bg-gray-900 border border-gray-800 rounded-xl overflow-hidden">
-        <table className="w-full text-sm">
+      <div className="bg-gray-900 border border-gray-800 rounded-xl overflow-x-auto">
+        <table className="w-full text-sm min-w-[768px]">
           <thead>
             <tr className="border-b border-gray-800">
               <th className="text-left text-gray-400 font-medium px-6 py-3">Invoice #</th>
@@ -113,15 +113,15 @@ export default function Invoices() {
       </div>
 
       {pagination.total_pages > 1 && (
-        <div className="flex items-center justify-between mt-4">
+        <div className="flex flex-col sm:flex-row items-center justify-between gap-3 mt-4">
           <p className="text-gray-500 text-sm">Page {pagination.page} of {pagination.total_pages}</p>
-          <div className="flex gap-2">
+          <div className="flex gap-2 w-full sm:w-auto">
             <button onClick={() => setPage(p => p - 1)} disabled={!pagination.has_prev}
-              className="px-3 py-1.5 text-sm bg-gray-800 text-gray-300 rounded-lg disabled:opacity-40 hover:bg-gray-700 transition-colors">
+              className="flex-1 sm:flex-none px-3 py-1.5 text-sm bg-gray-800 text-gray-300 rounded-lg disabled:opacity-40 hover:bg-gray-700 transition-colors">
               Previous
             </button>
             <button onClick={() => setPage(p => p + 1)} disabled={!pagination.has_next}
-              className="px-3 py-1.5 text-sm bg-gray-800 text-gray-300 rounded-lg disabled:opacity-40 hover:bg-gray-700 transition-colors">
+              className="flex-1 sm:flex-none px-3 py-1.5 text-sm bg-gray-800 text-gray-300 rounded-lg disabled:opacity-40 hover:bg-gray-700 transition-colors">
               Next
             </button>
           </div>

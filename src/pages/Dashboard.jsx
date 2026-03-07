@@ -57,14 +57,14 @@ export default function Dashboard() {
 
 
   return (
-    <div className="p-8">
-      <div className="mb-8">
-        <h1 className="text-2xl font-bold text-white">Dashboard</h1>
+    <div className="p-4 md:p-8">
+      <div className="mb-6 md:mb-8">
+        <h1 className="text-xl md:text-2xl font-bold text-white">Dashboard</h1>
         <p className="text-gray-400 text-sm mt-1">Business overview</p>
       </div>
 
       {/* Stats */}
-      <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4 mb-8">
+      <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-3 md:gap-4 mb-6 md:mb-8">
         <StatCard
           label="Total Revenue"
           value={fmt(revenue?.total_revenue)}
@@ -92,7 +92,7 @@ export default function Dashboard() {
       </div>
 
       {/* Order Pipeline */}
-      <div className="grid grid-cols-1 lg:grid-cols-2 gap-6">
+      <div className="grid grid-cols-1 lg:grid-cols-2 gap-4 md:gap-6">
         <div className="bg-gray-900 border border-gray-800 rounded-xl p-6">
           <h2 className="text-white font-semibold mb-4">Order Pipeline</h2>
           <div className="space-y-3">
