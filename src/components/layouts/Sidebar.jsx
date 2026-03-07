@@ -1,7 +1,6 @@
 import { NavLink, useNavigate } from 'react-router-dom';
 import { useAuth } from '../../context/AuthContext';
 import toast from 'react-hot-toast';
-import api from '../../api/client';
 
 const allLinks = [
   { to: '/dashboard',  label: 'Dashboard', icon: '▦', roles: ['admin', 'staff', 'viewer'] },
@@ -23,19 +22,10 @@ const links = allLinks.filter(link => link.roles.includes(user?.role));
 
 
   const handleLogout = async () => {
-    try {
-      // Call backend to clear httpOnly cookie
-      await api.post('/auth/logout');
-      // Clear user data from context/localStorage
-      logoutUser();
-      toast.success('Logged out');
-      navigate('/login');
-    } catch (error) {
-      console.error('Logout error:', error);
-      // Still logout on frontend even if backend call fails
-      logoutUser();
-      navigate('/login');
-    }
+    // Clear local auth data
+    logoutUser();
+    toast.success('Logged out');
+    navigate('/login');
   };
 
   return (

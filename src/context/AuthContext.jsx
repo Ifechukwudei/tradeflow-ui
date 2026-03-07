@@ -1,96 +1,61 @@
 /* eslint-disable react-refresh/only-export-components */
 import { createContext, useContext, useState, useEffect } from "react";
-import { getMe } from "../api/auth";
 
 /**
  * Authentication Context
- * Manages user authentication state using httpOnly cookies
+ * Manages user authentication state using localStorage (for cross-domain deployment)
  * 
- * Security Note:
- * - JWT tokens are stored in httpOnly cookies (not localStorage)
- * - Only user data is stored in localStorage for UI purposes
- * - Tokens cannot be accessed by JavaScript, preventing XSS attacks
+ * Note: For production on same domain, consider using httpOnly cookies instead
  */
 const AuthContext = createContext(null);
 
 /**
  * AuthProvider Component
  * Wraps the application to provide authentication context to all child components
- * 
- * Features:
- * - Persists user data in localStorage (for UI display only)
- * - Token is managed by httpOnly cookies (more secure)
- * - Automatically restores session on page reload
- * - Verifies authentication status on app load
  */
 export const AuthProvider = ({ children }) => {
-  // Initialize user state from localStorage (only user data, not token)
+  // Initialize user state from localStorage
   const [user, setUser] = useState(() => {
     const saved = localStorage.getItem("tf_user");
     return saved ? JSON.parse(saved) : null;
   });
 
-  const [loading, setLoading] = useState(true);
-
-  /**
-   * Check authentication status on app load
-   * Verifies if the stored token is still valid
-   */
-  useEffect(() => {
-    const checkAuth = async () => {
-      const savedUser = localStorage.getItem("tf_user");
-      if (savedUser) {
-        try {
-          // Verify token is still valid by calling /me endpoint
-          const response = await getMe();
-          setUser(response.data.data);
-        } catch (error) {
-          // Token is invalid or expired, clear localStorage and user state
-          console.log("Token invalid, clearing auth state");
-          localStorage.removeItem("tf_user");
-          setUser(null);
-        }
-      }
-      setLoading(false);
-    };
-
-    checkAuth();
-  }, []);
-
-  /**
-   * Listen for logout events from API interceptor
-   */
-  useEffect(() => {
-    const handleLogout = () => {
-      console.log("Logout event received, clearing user state");
-      setUser(null);
-    };
-
-    window.addEventListener("auth:logout", handleLogout);
-    return () => window.removeEventListener("auth:logout", handleLogout);
-  }, []);
+  // Initialize token state from localStorage
+  const [token, setToken] = useState(() => localStorage.getItem("tf_token"));
 
   /**
    * Login function
-   * Stores user data in localStorage
-   * Token is automatically stored in httpOnly cookie by the backend
+   * Stores both user data and token in localStorage
    * 
    * @param {Object} userData - User information (id, username, email, role, etc.)
+   * @param {string} tokenData - JWT authentication token
    */
-  const login = (userData) => {
+  const login = (userData, tokenData) => {
+    localStorage.setItem("tf_token", tokenData);
     localStorage.setItem("tf_user", JSON.stringify(userData));
+    setToken(tokenData);
     setUser(userData);
   };
 
   /**
    * Logout function
-   * Clears user data from localStorage
-   * Cookie is cleared by calling the backend logout endpoint
+   * Clears user data and token from both state and localStorage
    */
   const logout = () => {
+    localStorage.removeItem("tf_token");
     localStorage.removeItem("tf_user");
+    setToken(null);
     setUser(null);
   };
+
+  // Sync token changes with localStorage
+  useEffect(() => {
+    if (token) {
+      localStorage.setItem("tf_token", token);
+    } else {
+      localStorage.removeItem("tf_token");
+    }
+  }, [token]);
 
   // Sync user changes with localStorage
   useEffect(() => {
@@ -102,7 +67,7 @@ export const AuthProvider = ({ children }) => {
   }, [user]);
 
   return (
-    <AuthContext.Provider value={{ user, login, logout, loading }}>
+    <AuthContext.Provider value={{ user, token, login, logout }}>
       {children}
     </AuthContext.Provider>
   );
@@ -111,7 +76,7 @@ export const AuthProvider = ({ children }) => {
 /**
  * useAuth Hook
  * Custom hook to access authentication context
- * @returns {Object} Authentication context with user, login, logout, and loading
+ * @returns {Object} Authentication context with user, token, login, and logout
  * @throws {Error} If used outside of AuthProvider
  */
 export const useAuth = () => {

@@ -19,8 +19,8 @@ export default function Login() {
       const res = await login({ email, password });
       console.log('Login response:', res.data);
       
-      // Only pass user data - token is in httpOnly cookie
-      loginUser(res.data.data.user);
+      // Pass both user and token
+      loginUser(res.data.data.user, res.data.data.token);
       toast.success('Welcome back!');
       navigate('/dashboard');
     } catch (err) {
