@@ -19,7 +19,7 @@ const api = axios.create({
   headers: { "Content-Type": "application/json" },
   withCredentials: true, // Required to send httpOnly cookies
 });
-
+console.log("API Client initialized with base URL:", api.defaults.baseURL);
 /**
  * Response Interceptor
  * Handles 401 errors globally by clearing user data and redirecting to login
