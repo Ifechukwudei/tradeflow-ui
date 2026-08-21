@@ -44,10 +44,10 @@ export default function LoginPage() {
     setActiveTab('signin');
     if (role === 'admin') {
       setLoginEmail('admin@tradeflow.com');
-      setLoginPassword('password123');
+      setLoginPassword('Password123!');
     } else {
       setLoginEmail('staff@tradeflow.com');
-      setLoginPassword('password123');
+      setLoginPassword('Password123!');
     }
     toast.success(`Loaded ${role.toUpperCase()} demo credentials`);
   };
