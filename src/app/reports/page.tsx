@@ -165,7 +165,7 @@ export default function ReportsPage() {
                   margin={{ top: 5, right: 20, left: 40, bottom: 5 }}
                 >
                   <CartesianGrid strokeDasharray="3 3" stroke="#1E293B" horizontal={false} />
-                  <XAxis type="number" stroke="#64748B" fontSize={10} tickFormatter={(val) => `$${val}`} />
+                  <XAxis type="number" stroke="#64748B" fontSize={10} tickFormatter={(val) => `₦${val}`} />
                   <YAxis dataKey="sku" type="category" stroke="#64748B" fontSize={10} width={70} />
                   <Tooltip
                     contentStyle={{

@@ -7,10 +7,10 @@ export function cn(...inputs: ClassValue[]) {
 
 export function formatCurrency(amount: number | string | null | undefined): string {
   const num = typeof amount === 'string' ? parseFloat(amount) : amount;
-  if (num === null || num === undefined || isNaN(num)) return '$0.00';
-  return new Intl.NumberFormat('en-US', {
+  if (num === null || num === undefined || isNaN(num)) return '₦0.00';
+  return new Intl.NumberFormat('en-NG', {
     style: 'currency',
-    currency: 'USD',
+    currency: 'NGN',
     minimumFractionDigits: 2,
     maximumFractionDigits: 2,
   }).format(num);
