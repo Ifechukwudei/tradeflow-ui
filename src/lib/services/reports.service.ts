@@ -14,7 +14,7 @@ export const ReportsService = {
   },
 
   async getOrdersSummary() {
-    const res = await api.get<{ data: OrdersSummaryItem[] }>('/reports/orders');
+    const res = await api.get<{ data: OrdersSummaryItem[] }>('/reports/orders-summary');
     return res.data.data;
   },
 
@@ -24,12 +24,12 @@ export const ReportsService = {
   },
 
   async getInventoryStatus() {
-    const res = await api.get<{ data: InventoryStatusItem[] }>('/reports/inventory');
+    const res = await api.get<{ data: InventoryStatusItem[] }>('/reports/inventory-status');
     return res.data.data;
   },
 
   async getPaymentsSummary() {
-    const res = await api.get<{ data: PaymentsSummary }>('/reports/payments');
+    const res = await api.get<{ data: PaymentsSummary }>('/reports/payments-summary');
     return res.data.data;
   },
 };
