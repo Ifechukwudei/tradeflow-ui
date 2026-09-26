@@ -37,6 +37,7 @@ const NAV_ITEMS: NavItem[] = [
   { href: '/invoices', label: 'Invoices', icon: FileText, roles: ['admin', 'staff'] },
   { href: '/returns', label: 'Returns', icon: RotateCcw, roles: ['admin', 'staff'] },
   { href: '/reports', label: 'Reports & Analytics', icon: BarChart3, roles: ['admin', 'staff', 'viewer'] },
+  { href: '/activity', label: 'Activity Logs', icon: FileText, roles: ['admin'] },
   { href: '/users', label: 'Team & RBAC', icon: ShieldCheck, roles: ['admin'] },
 ];
 

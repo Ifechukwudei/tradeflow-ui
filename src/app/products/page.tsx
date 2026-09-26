@@ -11,8 +11,10 @@ import { ProductService } from '@/lib/services/product.service';
 import { formatCurrency } from '@/lib/utils';
 import { CreateProductPayload, Product, UpdateProductPayload } from '@/types/product';
 import { PaginationMeta } from '@/types/api';
+import { useAuth } from '@/context/AuthContext';
 
 export default function ProductsPage() {
+  const { user } = useAuth();
   const [products, setProducts] = useState<Product[]>([]);
   const [pagination, setPagination] = useState<PaginationMeta>({
     total: 0,
@@ -227,12 +229,14 @@ export default function ProductsPage() {
                           >
                             <Edit2 className="h-3.5 w-3.5" />
                           </button>
-                          <button
-                            onClick={() => handleDelete(prod.id)}
-                            className="p-1.5 rounded-lg bg-slate-800 hover:bg-rose-500/20 text-slate-400 hover:text-rose-400 transition-colors"
-                          >
-                            <Trash2 className="h-3.5 w-3.5" />
-                          </button>
+                          {user?.role === 'admin' && (
+                            <button
+                              onClick={() => handleDelete(prod.id)}
+                              className="p-1.5 rounded-lg bg-slate-800 hover:bg-rose-500/20 text-slate-400 hover:text-rose-400 transition-colors"
+                            >
+                              <Trash2 className="h-3.5 w-3.5" />
+                            </button>
+                          )}
                         </div>
                       </td>
                     </tr>
