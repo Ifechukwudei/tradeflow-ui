@@ -159,7 +159,7 @@ export default function ActivityLogsPage() {
                         </div>
                       </td>
                       <td className="py-4 px-6">
-                        <span className={\`inline-flex items-center px-2 py-0.5 rounded-md text-[10px] font-bold tracking-wider border \${getActionColor(log.action)}\`}>
+                        <span className={`inline-flex items-center px-2 py-0.5 rounded-md text-[10px] font-bold tracking-wider border ${getActionColor(log.action)}`}>
                           {log.action}
                         </span>
                       </td>
