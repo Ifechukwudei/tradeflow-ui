@@ -197,7 +197,14 @@ export default function InvoicesPage() {
                         <td className="py-4 px-6 font-sans">
                           <StatusBadge status={inv.status} />
                         </td>
-                        <td className="py-4 px-6 text-right font-sans">
+                        <td className="py-4 px-6 text-right font-sans flex items-center justify-end gap-2">
+                          <button
+                            onClick={() => InvoiceService.downloadPDF(inv.id, inv.invoice_number)}
+                            className="inline-flex items-center gap-1 px-3 py-1.5 rounded-lg bg-blue-600/15 hover:bg-blue-600/25 text-blue-400 border border-blue-500/30 text-xs font-semibold transition-colors"
+                            title="Download PDF"
+                          >
+                            <FileText className="h-3.5 w-3.5" />
+                          </button>
                           {inv.status !== 'paid' ? (
                             <button
                               onClick={() => openPaymentModal(inv)}
@@ -207,7 +214,7 @@ export default function InvoicesPage() {
                               <span>Record Payment</span>
                             </button>
                           ) : (
-                            <span className="text-[11px] text-slate-500 font-mono">Settled ✓</span>
+                            <span className="text-[11px] text-slate-500 font-mono flex items-center h-8">Settled ✓</span>
                           )}
                         </td>
                       </tr>
