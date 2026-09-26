@@ -7,7 +7,7 @@ const nextConfig = {
         source: '/api/:path*',
         destination: process.env.NEXT_PUBLIC_BACKEND_URL 
           ? `${process.env.NEXT_PUBLIC_BACKEND_URL}/api/:path*` 
-          : 'https://tradeflow-production-4a4d.up.railway.app/api/:path*',
+          : 'https://tradeflow.pxxlspace.cv/api/:path*',
       },
     ];
   },

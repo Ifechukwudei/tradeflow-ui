@@ -1,7 +1,7 @@
 import axios from 'axios';
 
 const api = axios.create({
-  baseURL: process.env.NEXT_PUBLIC_API_URL || 'https://tradeflow-production-4a4d.up.railway.app/api',
+  baseURL: process.env.NEXT_PUBLIC_API_URL || 'https://tradeflow.pxxlspace.cv/api',
   headers: {
     'Content-Type': 'application/json',
   },
