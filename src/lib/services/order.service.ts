@@ -30,7 +30,7 @@ export const OrderService = {
   },
 
   async generateInvoice(id: number, due_days = 30) {
-    const res = await api.post<{ data: Invoice }>(`/orders/${id}/invoice`, { due_days });
+    const res = await api.patch<{ data: Invoice }>(`/orders/${id}/invoice`, { due_days });
     return res.data.data;
   },
 
