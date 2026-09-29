@@ -18,10 +18,8 @@ export const InvoiceService = {
   },
 
   downloadPDF(id: number, invoiceNumber: string) {
-    const url = `${api.defaults.baseURL}/invoices/${id}/pdf`;
-    
     // We fetch it via axios to attach the JWT token properly
-    api.get(url, { responseType: 'blob' }).then(response => {
+    api.get(`/invoices/${id}/pdf`, { responseType: 'blob' }).then(response => {
       const blob = new Blob([response.data], { type: 'application/pdf' });
       const downloadUrl = window.URL.createObjectURL(blob);
       const link = document.createElement('a');
